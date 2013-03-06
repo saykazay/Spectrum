@@ -11,17 +11,17 @@ It has no copyrights as of today, 3/06/2013
 #include <allegro5\allegro_primitives.h>
 #include <allegro5\allegro_font.h>
 #include <allegro5\allegro_ttf.h>
-#include <iostream>
-#include <fstream>
 
 #include "globals.h"
+#include "GameObject.h"
+#include "Player.h"
 
 bool keys[] = {false, false, false, false, false};
 enum KEYS{UP,DOWN,LEFT,RIGHT,SPACE};
 
 int main(int argc, char **argv)
 {
-  //============================================
+	//============================================
 	//SHELL VARIABLES
 	//============================================
 	bool done = false;
@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 	//============================================
 	//PROJECT VARIABLES
 	//============================================
-	int ground[18][24];
+	Player player;
 
 	//============================================
 	//ALLEGRO VARIABLES
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 	if (!al_init())
 		return -1;
 
-	display = al_create_display(SCREENWIDTH, SCREENHEIGHT);					//creates display object
+	display = al_create_display(SCREENWIDTH, SCREENHEIGHT);			//creates display object
 
 	if (!display)										//tests display object
 		return -1;
@@ -70,6 +70,7 @@ int main(int argc, char **argv)
 
 	font18 = al_load_font("stonehen.ttf",18,0);
 	ALLEGRO_BITMAP*background = al_load_bitmap("Greyscale.png");
+	player.init();
 
 	//============================================
 	//TIMER INIT AND STARTUP
@@ -145,6 +146,17 @@ int main(int argc, char **argv)
 		{
 			render = true;
 
+			if(keys[UP])
+				player.moveUp();
+			if(keys[DOWN])
+				player.moveDown();
+			if(keys[LEFT])
+				player.moveLeft();
+			if(keys[RIGHT])
+				player.moveRight();
+
+			player.Update();
+
 			//UPDATE FPS===========
 			frames++;
 			if(al_current_time() - gameTime >= 1)
@@ -164,7 +176,7 @@ int main(int argc, char **argv)
 			al_draw_textf(font18, al_map_rgb(255, 0, 255), 5, 5, 0, "FPS: %i", gameFPS);	//display FPS on screen
 
 			//BEGIN PROJECT RENDER=================
-
+			player.Render();
 			//FLIP BUFFERS=========================
 			al_flip_display();
 			al_draw_bitmap(background,0,0,0);
@@ -180,6 +192,9 @@ int main(int argc, char **argv)
 	al_destroy_timer(timer);
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);
+
+	player.Destroy();
+
 
 	return 0;
 }
