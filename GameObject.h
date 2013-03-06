@@ -7,9 +7,10 @@
 class GameObject
 {
 private:
+	int ID;
 
 protected:
-  float x;
+	float x;
 	float y;
 	ALLEGRO_BITMAP *image;
 
@@ -23,4 +24,7 @@ public:
 	void Init(float x, float y);
 	void virtual Update();
 	void virtual Render();
+
+	int getID() {return ID;}
+	void SetID(int ID) {GameObject::ID = ID;}
 };
