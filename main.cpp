@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 	if (!al_init())
 		return -1;
 
-	display = al_create_display(WIDTH, HEIGHT);			//creates display object
+	display = al_create_display(SCREENWIDTH, SCREENHEIGHT);					//creates display object
 
 	if (!display)										//tests display object
 		return -1;
