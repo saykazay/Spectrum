@@ -1,4 +1,4 @@
 #pragma once
 
-const int HEIGHT = 600;
-const int WIDTH = 900;
+const int SCREENHEIGHT = 600;
+const int SCREENWIDTH = 900;
